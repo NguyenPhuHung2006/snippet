@@ -1,0 +1,37 @@
+template<class T>
+class SegmentTree
+{
+private:
+	vector<T> tree;
+	int N;
+public:
+	SegmentTree(const vector<T>& a) : N(a.size())
+	{
+		tree.resize(2 * N);
+		for(int i = 0; i < N; i++)
+			tree[N + i] = a[i];
+
+		for(int i = N - 1; i >= 1; i--)
+			tree[i] = T::combine(tree[i << 1], tree[i << 1 | 1]);
+	}
+
+	void update(int i, T val)
+	{
+		tree[N + i] = val;
+		for(int j = (N + i) >> 1; j >= 1; j >>= 1)
+			tree[j] = T::combine(tree[j << 1], tree[j << 1 | 1]);
+	}
+
+	T query(int l, int r)
+	{
+		T res;
+		for(l += N, r += N; l <= r; l >>= 1, r >>= 1)
+		{
+			if(l & 1)
+				res = T::combine(res, tree[l++]);
+			if(!(r & 1))
+				res = T::combine(res, tree[r--]);
+		}
+		return res;
+	}
+};
