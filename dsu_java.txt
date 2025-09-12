@@ -1,0 +1,35 @@
+class DSU 
+{
+    private int[] Parent, Size;
+
+    public DSU(int n) 
+	{
+        Parent = new int[n];
+        Size = new int[n];
+        for (int i = 0; i < n; i++) Parent[i] = i;
+        Arrays.fill(Size, 1);
+    }
+
+    public int find(int u) {
+        if (Parent[u] != u) Parent[u] = find(Parent[u]);
+        return Parent[u];
+    }
+
+    public void unite(int u, int v) {
+        u = find(u); v = find(v);
+        if (u == v) return;
+        if (Size[u] < Size[v]) {
+            int tmp = u; u = v; v = tmp;  
+        }
+        Parent[v] = u;
+        Size[u] += Size[v];
+    }
+
+    public boolean same(int u, int v) {
+        return find(u) == find(v);
+    }
+
+    public int size(int u) {
+        return Size[find(u)];
+    }
+}
