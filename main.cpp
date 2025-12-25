@@ -22,7 +22,10 @@ using namespace std;
 
 #define fastio ios::sync_with_stdio(false); cin.tie(nullptr)
 using ll = long long;
-bool has_mutiple_tests = true;
+using vii = vector<vector<int>>;
+constexpr bool has_mutiple_tests = true;
+#define all(x) (x).begin(), (x).end()
+#define sz(x) (int)(x).size()
 
 void solve() 
 {
